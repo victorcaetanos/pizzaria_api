@@ -1,7 +1,12 @@
-# Awesome Project Build with TypeORM
+# Pizzaria API
 
-Steps to run this project:
+⚠ Project under construction ⚠
 
-1. Run `npm i` command
-2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+* Only the Models have been created so far
+
+## TODO
+* Routes
+* Controller
+* Services
+* Swagger
+* Tests?
