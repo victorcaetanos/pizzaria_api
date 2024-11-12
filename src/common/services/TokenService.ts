@@ -1,5 +1,5 @@
 import jwt, {JwtPayload} from "jsonwebtoken";
-import {jwtExpirationInSeconds, jwtSecret} from "../../config";
+import {jwtExpirationInSeconds} from "../../config";
 
 export interface ITokenService {
     generateAccessToken(id: number, email: string): string;
@@ -34,7 +34,7 @@ export class TokenService implements ITokenService {
                 id,
                 email,
             },
-            jwtSecret,
+            process.env.JWT_SECRET,
             {
                 expiresIn: jwtExpirationInSeconds,
             }

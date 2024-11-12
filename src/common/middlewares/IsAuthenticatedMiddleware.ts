@@ -1,7 +1,8 @@
 import {NextFunction, Request, Response} from "express";
-import {jwtSecret} from "../../config";
 import {ITokenService} from "../services/TokenService";
+import * as dotenv from "dotenv";
 
+dotenv.config();
 
 export const IsAuthenticatedMiddleware = {
     check: (tokenService: ITokenService) => {
@@ -29,7 +30,7 @@ export const IsAuthenticatedMiddleware = {
             }
 
             try {
-                req.user = tokenService.verify(token, jwtSecret);
+                req.user = tokenService.verify(token, process.env.JWT_SECRET);
                 next();
             } catch (err) {
                 console.log(err)
