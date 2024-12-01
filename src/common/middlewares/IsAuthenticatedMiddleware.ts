@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from "express";
+import {NextFunction, Response} from "express";
 import {ITokenService} from "../services/TokenService";
 import * as dotenv from "dotenv";
 

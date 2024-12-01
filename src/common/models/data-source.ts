@@ -1,11 +1,7 @@
 import "reflect-metadata";
 import * as dotenv from 'dotenv';
 import {DataSource} from "typeorm";
-import {
-    User, State, City, Address,
-    Category, Product, SizeProduct,
-    Order, OrderItem, Card, Size,
-} from "./index";
+import {Address, Card, Category, City, Order, OrderItem, Product, Size, SizeProduct, State, User,} from "./index";
 
 dotenv.config();
 

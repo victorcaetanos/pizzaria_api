@@ -1,6 +1,6 @@
 export {User} from "../../resources/user/model/User";
 export {City} from "../../resources/city/model/City";
-export {Address} from "../../resources/address/repository/Address";
+export {Address} from "../../resources/address/model/Address";
 export {State} from "../../resources/state/model/State";
 export {Category} from "../../resources/category/model/Category";
 export {Product} from "../../resources/product/model/Product";

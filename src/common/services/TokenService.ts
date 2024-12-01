@@ -3,6 +3,7 @@ import {jwtExpirationInSeconds} from "../../config";
 
 export interface ITokenService {
     generateAccessToken(id: number, email: string): string;
+
     verify(token: string, secret: string): string | JwtPayload;
 }
 
