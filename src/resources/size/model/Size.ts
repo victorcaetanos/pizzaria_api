@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, UpdateDateColumn} from 'typeorm';
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
 import {SizeProduct} from "./SizeProduct";
+import {OrderItem} from "../../orderItem/model/OrderItem";
 
 @Entity('sizes')
 export class Size {
@@ -19,5 +20,8 @@ export class Size {
     updated_at: Date;
 
     @OneToMany(() => SizeProduct, sizeProduct => sizeProduct.size)
-    sizeProduct: SizeProduct[];
+    sizeProduct: SizeProduct;
+
+    @OneToMany(() => OrderItem, orderItem => orderItem.size)
+    orderItem: OrderItem;
 }

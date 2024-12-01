@@ -74,10 +74,6 @@ export class UserRepository implements IUserRepository {
         return this.repository.save(user);
     }
 
-    // async update(id: number, user: Partial<User>): Promise<void> {
-    //     await this.repository.update(id, user);
-    // }
-
     async update(user: Partial<User>): Promise<User> {
         await this.repository.save(user);
         return await this.repository.findOne({

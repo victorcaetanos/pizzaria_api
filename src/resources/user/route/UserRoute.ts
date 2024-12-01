@@ -1,18 +1,19 @@
 import {Router} from "express";
 
-import {IUserController, UserController} from "../controller/UserController";
 import {
-    SchemaValidationMiddleware,
+    CheckPermissionMiddleware,
     IsAuthenticatedMiddleware,
-    CheckPermissionMiddleware
+    SchemaValidationMiddleware
 } from "../../../common/middlewares";
-import {updateUserPayload, changeUserRolePayload} from "../schemas/";
 import {roles} from "../../../config";
-import {IUserService, UserService} from "../service/UserService";
+
 import {CryptographyService, ICryptographyService} from "../../../common/services/CryptographyService";
 import {ITokenService, TokenService} from "../../../common/services/TokenService";
+
+import {IUserController, UserController} from "../controller/UserController";
+import {IUserService, UserService} from "../service/UserService";
 import {IUserRepository, UserRepository} from "../model/UserRepository";
-import {getAllUsersPayload} from "../schemas/getAllUsersPayload";
+import {changeUserRolePayload, getAllUsersPayload, patchUserPayload} from "../schemas/";
 
 export class UserRoute {
     private router: Router;
@@ -30,6 +31,9 @@ export class UserRoute {
         this.initializeRoutes();
     }
 
+    public getRoutes(): Router {
+        return this.router;
+    }
 
     private initializeRoutes(): void {
         this.router.get("/",
@@ -55,7 +59,7 @@ export class UserRoute {
         this.router.patch("/:id",
             [
                 IsAuthenticatedMiddleware.check(this.tokenService),
-                SchemaValidationMiddleware.verify(updateUserPayload)
+                SchemaValidationMiddleware.verify(patchUserPayload)
             ],
             this.userController.updateUser.bind(this.userController),
         );
@@ -73,9 +77,5 @@ export class UserRoute {
             [IsAuthenticatedMiddleware.check(this.tokenService)],
             this.userController.deleteUser.bind(this.userController),
         );
-    }
-
-    public getRoutes(): Router {
-        return this.router;
     }
 }

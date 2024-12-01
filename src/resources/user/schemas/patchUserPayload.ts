@@ -1,4 +1,4 @@
-export const updateUserPayload: object =<object> {
+export const patchUserPayload: object = <object>{
     type: 'object',
     properties: {
         email: {

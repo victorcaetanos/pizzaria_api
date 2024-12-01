@@ -1,11 +1,11 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
-    ManyToOne,
+    Entity,
     JoinColumn,
+    ManyToOne,
     OneToMany,
+    PrimaryGeneratedColumn,
     UpdateDateColumn
 } from 'typeorm';
 import {OrderItem} from "../../orderItem/model/OrderItem";
@@ -17,11 +17,17 @@ export class Product {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({type: 'int'})
-    subcategory_id: number;
-
     @Column({type: 'varchar', length: 100})
     name: string;
+
+    @Column({type: 'varchar', length: 300})
+    description: string;
+
+    @Column({type: 'int'})
+    category_id: number;
+
+    @Column({type: 'path'})
+    image_url: string;
 
     @Column({type: 'decimal', precision: 10, scale: 2})
     price: number;

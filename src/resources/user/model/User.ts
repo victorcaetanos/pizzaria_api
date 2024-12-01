@@ -1,14 +1,14 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
+    Entity,
+    JoinColumn,
     OneToMany,
     OneToOne,
-    JoinColumn,
+    PrimaryGeneratedColumn,
     UpdateDateColumn
 } from 'typeorm';
-import {Address} from "../../address/repository/Address";
+import {Address} from "../../address/model/Address";
 import {Card} from "../../card/model/Card";
 import {Order} from "../../order/model/Order";
 
@@ -37,7 +37,6 @@ export class User {
     @Column({type: 'varchar', length: 15})
     phone_number: string;
 
-    // @Column({type: 'enum', length: 15}) TODO: check this declaration
     @Column({type: "enum", enum: role, default: role.USER})
     role: role
 

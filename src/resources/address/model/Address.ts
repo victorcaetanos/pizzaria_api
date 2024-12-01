@@ -1,19 +1,28 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
     Column,
-    ManyToOne,
+    CreateDateColumn,
+    Entity,
     JoinColumn,
+    ManyToOne,
+    OneToMany,
     OneToOne,
-    CreateDateColumn, UpdateDateColumn
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
 } from 'typeorm';
 import {User} from '../../user/model/User';
 import {City} from '../../city/model/City';
+import {Order} from "../../order/model/Order";
 
 @Entity('addresses')
 export class Address {
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Column({type: 'int'})
+    user_id: number;
+
+    @Column({type: 'int'})
+    city_id: number;
 
     @Column({type: 'varchar', length: 20})
     cep: string;
@@ -29,9 +38,6 @@ export class Address {
 
     @Column({type: 'varchar', length: 100})
     neighborhood: string;
-
-    @Column({type: 'int'})
-    city_id: number;
 
     @Column({type: 'boolean', default: true})
     is_active: boolean;
@@ -49,6 +55,9 @@ export class Address {
     @ManyToOne(() => City, city => city.address)
     @JoinColumn({name: 'city_id'})
     city: City;
+
+    @OneToMany(() => Order, order => order.address)
+    order: Order;
 
     @OneToOne(() => User, user => user.selected_address)
     selected_address: User;

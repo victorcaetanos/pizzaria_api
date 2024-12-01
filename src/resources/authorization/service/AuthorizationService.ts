@@ -1,9 +1,6 @@
 import {authResponseType} from "../schemas";
-import {User} from "../../user/model/User";
-import {
-    NotFoundError,
-    UnauthorizedError
-} from "../../../common/errors";
+import {User} from "../../../common/models/";
+import {NotFoundError, UnauthorizedError} from "../../../common/errors";
 import {IUserService} from "../../user/service/UserService";
 import {ICryptographyService} from "../../../common/services/CryptographyService";
 import {ITokenService} from "../../../common/services/TokenService";
@@ -48,15 +45,7 @@ export class AuthorizationService implements IAuthorizationService {
         const {email, password} = user;
 
         try {
-            const foundUser: User = await this.userRepository
-                .findOneByEmailWithPassword(email);
-            if (!foundUser) {
-                throw new NotFoundError(`Could not find any user with email: \`${email}\`.`);
-            }
-
-            if (this.cryptographyService.comparePasswords(password, foundUser.password)) {
-                throw new UnauthorizedError(`Provided email and password did not match.`);
-            }
+            const foundUser: User = await this.auth(email, password);
 
             const accessToken: string = this.webTokenService.generateAccessToken(foundUser.id, foundUser.email);
 
@@ -67,5 +56,19 @@ export class AuthorizationService implements IAuthorizationService {
         } catch (err: any) {
             throw err;
         }
+    }
+
+    private async auth(email: string, password: string): Promise<User> {
+
+        const foundUser: User = await this.userRepository
+            .findOneByEmailWithPassword(email);
+        if (!foundUser) {
+            throw new NotFoundError(`Could not find any user with email: \`${email}\`.`);
+        }
+
+        if (this.cryptographyService.comparePasswords(password, foundUser.password)) {
+            throw new UnauthorizedError(`Provided email and password did not match.`);
+        }
+        return foundUser;
     }
 }

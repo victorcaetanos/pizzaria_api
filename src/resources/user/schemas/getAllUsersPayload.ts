@@ -2,9 +2,9 @@ export const getAllUsersPayload: object = <object>{
     type: 'object',
     properties: {
         id: {
-            type: 'number',
+            type: 'integer',
             nullable: false,
-            exclusiveMinimum: 0,
+            minimum: 1,
             exclusiveMaximum: 2147483647,
         },
         email: {

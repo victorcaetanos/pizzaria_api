@@ -1,9 +1,9 @@
 import {Router} from "express";
 
-import {IAuthorizationController, AuthorizationController} from "../controller/AuthorizationController";
+import {AuthorizationController, IAuthorizationController} from "../controller/AuthorizationController";
 import {SchemaValidationMiddleware} from "../../../common/middlewares";
-import {registerPayload, loginPayload} from "../schemas";
-import {IAuthorizationService, AuthorizationService} from "../service/AuthorizationService";
+import {loginPayload, registerPayload} from "../schemas";
+import {AuthorizationService, IAuthorizationService} from "../service/AuthorizationService";
 import {IUserService, UserService} from "../../user/service/UserService";
 import {CryptographyService, ICryptographyService} from "../../../common/services/CryptographyService";
 import {ITokenService, TokenService} from "../../../common/services/TokenService";
@@ -32,6 +32,10 @@ export class AuthorizationRoute {
         this.initializeRoutes();
     }
 
+    public getRoutes(): Router {
+        return this.router;
+    }
+
     private initializeRoutes(): void {
         this.router.post(
             "/signup",
@@ -44,9 +48,5 @@ export class AuthorizationRoute {
             [SchemaValidationMiddleware.verify(loginPayload)],
             this.authorizationController.login.bind(this.authorizationController)
         );
-    }
-
-    public getRoutes(): Router {
-        return this.router;
     }
 }

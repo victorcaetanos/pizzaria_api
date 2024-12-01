@@ -1,15 +1,25 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
-    ManyToOne,
+    Entity,
     JoinColumn,
+    ManyToOne,
     OneToMany,
+    PrimaryGeneratedColumn,
     UpdateDateColumn
 } from 'typeorm';
 import {User} from '../../user/model/User';
 import {OrderItem} from "../../orderItem/model/OrderItem";
+import {Address} from "../../address/model/Address";
+import {Card} from "../../card/model/Card";
+
+export enum status {
+    UNKNOWN = "unknown",
+    ORDERED = "ordered",
+    MAKING = "making",
+    UNDERWAY = "underway",
+    FINISHED = "finished",
+}
 
 @Entity('orders')
 export class Order {
@@ -17,13 +27,25 @@ export class Order {
     id: number;
 
     @Column({type: 'int'})
-    client_id: number;
+    user_id: number;
+
+    @Column({type: 'int'})
+    card_id: number;
+
+    @Column({type: 'int'})
+    address_id: number;
 
     @Column({type: 'decimal', precision: 10, scale: 2})
     total: number;
 
     @Column({type: 'decimal', precision: 10, scale: 2, default: 0})
     discount: number;
+
+    @Column({type: 'varchar', length: 20})
+    notes: string;
+
+    @Column({type: 'enum', enum: status, default: status.ORDERED})
+    status: status;
 
     @Column({type: 'boolean', default: true})
     is_active: boolean;
@@ -40,4 +62,12 @@ export class Order {
 
     @OneToMany(() => OrderItem, orderItem => orderItem.order)
     orderItem: OrderItem;
+
+    @ManyToOne(() => Address, address => address.order)
+    @JoinColumn({name: 'address_id'})
+    address: Address;
+
+    @ManyToOne(() => Card, card => card.order)
+    @JoinColumn({name: 'card_id'})
+    card: Card;
 }

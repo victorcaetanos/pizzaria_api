@@ -1,10 +1,5 @@
 import {Request, Response} from "express";
-import {
-    NotFoundError,
-    BadRequestError,
-    UnprocessableEntityError,
-    ConflictError
-} from "../../../common/errors";
+import {ConflictError, NotFoundError, UnprocessableEntityError} from "../../../common/errors";
 import {IUserService} from "../service/UserService";
 import {User} from "../model/User";
 

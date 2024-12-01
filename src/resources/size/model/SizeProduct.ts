@@ -1,4 +1,4 @@
-import {Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn} from 'typeorm';
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn} from 'typeorm';
 import {Product} from '../../product/model/Product';
 import {Size} from './Size';
 

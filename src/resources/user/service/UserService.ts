@@ -1,12 +1,8 @@
-import {User} from "../model/User";
-import {
-    NotFoundError,
-    UnprocessableEntityError,
-    ConflictError
-} from "../../../common/errors";
+import {User} from "../../../common/models";
+import {ConflictError, NotFoundError, UnprocessableEntityError} from "../../../common/errors";
 import {ICryptographyService} from "../../../common/services/CryptographyService";
 import {IUserRepository} from "../model/UserRepository";
-import {validateId} from "../../../common/utils/validation";
+import {idValidation} from "../../../common/utils/validation";
 import {ITokenService, TokenService} from "../../../common/services/TokenService";
 import {JsonWebTokenError} from "jsonwebtoken";
 
@@ -62,7 +58,7 @@ export class UserService implements IUserService {
      */
     async findOne(id: number): Promise<User> {
         try {
-            await this.idValidation(id);
+            await idValidation(id, User);
             const user: User = await this.userRepository.findOneById(id);
             return this.removePassword(user);
         } catch (err) {
@@ -82,7 +78,7 @@ export class UserService implements IUserService {
         try {
             // @ts-ignore
             const {id} = this.tokenService.verify(jwt, process.env.JWT_SECRET);
-            await this.idValidation(id);
+            await idValidation(id, User);
             const user: User = await this.userRepository.findOneById(id);
             return this.removePassword(user);
         } catch (err) {
@@ -128,7 +124,7 @@ export class UserService implements IUserService {
     async update(id: number, user: User): Promise<User> {
 
         try {
-            await this.idValidation(id);
+            await idValidation(id, User);
             user.id = id;
 
             await this.validateUser(user);
@@ -154,11 +150,24 @@ export class UserService implements IUserService {
      */
     async delete(id: number): Promise<void> {
         try {
-            await this.idValidation(id);
+            await idValidation(id, User);
             await this.userRepository.delete(id);
         } catch (err) {
             throw err;
         }
+    }
+
+    /**
+     * @description Returns a User Object without password.
+     * Used just in case TypeORM fails to remove the password from the object
+     *
+     * @param {User} user - User object
+     *
+     * @returns {User} - User object without password
+     */
+    public removePassword(user: User): User {
+        const {password, ...userWithoutPassword} = user;
+        return userWithoutPassword as User;
     }
 
     /**
@@ -243,28 +252,4 @@ export class UserService implements IUserService {
      *
      * @returns {Promise<void>}
      */
-    private async idValidation(id: number): Promise<void> {
-        if (validateId(id) === false) {
-            throw new UnprocessableEntityError("Invalid user id");
-        }
-
-        const existingUser = await this.userRepository.findOneById(id);
-
-        if (!existingUser) {
-            throw new NotFoundError(`Could not find any user with id: \`${id}\`.`);
-        }
-    }
-
-    /**
-     * @description Returns a User Object without password.
-     * Used just in case TypeORM fails to remove the password from the object
-     *
-     * @param {User} user - User object
-     *
-     * @returns {User} - User object without password
-     */
-    public removePassword(user: User): User {
-        const {password, ...userWithoutPassword} = user;
-        return userWithoutPassword as User;
-    }
 }

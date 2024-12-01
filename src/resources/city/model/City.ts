@@ -1,15 +1,15 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
-    ManyToOne,
+    Entity,
     JoinColumn,
+    ManyToOne,
     OneToMany,
+    PrimaryGeneratedColumn,
     UpdateDateColumn
 } from 'typeorm';
 import {State} from '../../state/model/State';
-import {Address} from "../../address/repository/Address";
+import {Address} from "../../address/model/Address";
 
 @Entity('cities')
 export class City {
