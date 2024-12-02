@@ -52,7 +52,6 @@ export class CardService implements ICardService {
 
         try {
             await idValidation(id, Card);
-            await idValidation(card.user_id, User);
             card.id = id;
             return await this.cardRepository.update(card);
         } catch (err) {

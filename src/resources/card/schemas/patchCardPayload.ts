@@ -20,7 +20,9 @@ export const patchCardPayload: object = <object>{
             maxLength: 11,
         },
         expire_date: {
-            type: 'date',
+            type: 'string',
+            minLength: 10,
+            maxLength: 10,
             nullable: false,
         },
         cvv: {
@@ -28,12 +30,6 @@ export const patchCardPayload: object = <object>{
             nullable: false,
             minLength: 3,
             maxLength: 5,
-        },
-        user_id: {
-            type: 'integer',
-            nullable: false,
-            minimum: 1,
-            exclusiveMaximum: 2147483647,
         },
         is_active: {
             type: 'boolean',

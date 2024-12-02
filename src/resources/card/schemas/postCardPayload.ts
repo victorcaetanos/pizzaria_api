@@ -20,7 +20,9 @@ export const postCardPayload = <object>{
             maxLength: 11,
         },
         expire_date: {
-            type: 'date',
+            type: 'string',
+            minLength: 10,
+            maxLength: 10,
             nullable: false,
         },
         cvv: {

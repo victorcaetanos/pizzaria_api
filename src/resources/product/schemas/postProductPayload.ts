@@ -19,6 +19,11 @@ export const postProductPayload = <object>{
             minLength: 2,
             maxLength: 300,
         },
+        price: {
+            type: 'number',
+            nullable: false,
+            minimum: 0,
+        },
         category_id: {
             type: 'integer',
             nullable: false,

@@ -24,6 +24,11 @@ export const patchProductPayload: object = <object>{
             minimum: 1,
             exclusiveMaximum: 2147483647,
         },
+        price: {
+            type: 'number',
+            nullable: false,
+            minimum: 0,
+        },
         is_active: {
             type: 'boolean',
             nullable: false,

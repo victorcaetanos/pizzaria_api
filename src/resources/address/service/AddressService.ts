@@ -54,7 +54,6 @@ export class AddressService implements IAddressService {
 
         try {
             await idValidation(address.city_id, City);
-            await idValidation(address.user_id, User);
             await idValidation(id, Address);
             address.id = id;
             return await this.addressRepository.update(address);

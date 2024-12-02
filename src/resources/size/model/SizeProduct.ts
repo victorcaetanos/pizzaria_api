@@ -12,7 +12,7 @@ export class SizeProduct {
     size_id: number;
 
     @Column({type: 'decimal', precision: 10, scale: 2})
-    price: number;
+    size_price: number;
 
     @Column({type: 'boolean', default: true})
     is_active: boolean;

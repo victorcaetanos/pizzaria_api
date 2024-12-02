@@ -26,7 +26,7 @@ export class Product {
     @Column({type: 'int'})
     category_id: number;
 
-    @Column({type: 'path'})
+    @Column({type: 'varchar', length: 300})
     image_url: string;
 
     @Column({type: 'decimal', precision: 10, scale: 2})
