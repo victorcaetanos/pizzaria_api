@@ -36,7 +36,7 @@ export class UserRoute {
     }
 
     private initializeRoutes(): void {
-        this.router.get("/",
+        this.router.get("/all/:id",
             [
                 IsAuthenticatedMiddleware.check(this.tokenService),
                 CheckPermissionMiddleware.has(this.userRepository, roles.ADMIN),

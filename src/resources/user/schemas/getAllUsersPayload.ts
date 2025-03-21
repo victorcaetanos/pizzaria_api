@@ -1,12 +1,6 @@
 export const getAllUsersPayload: object = <object>{
     type: 'object',
     properties: {
-        id: {
-            type: 'integer',
-            nullable: false,
-            minimum: 1,
-            exclusiveMaximum: 2147483647,
-        },
         email: {
             type: 'string',
             nullable: false,
@@ -16,7 +10,6 @@ export const getAllUsersPayload: object = <object>{
         }
     },
     required: [
-        'id',
         'email',
     ],
     additionalProperties: false
